@@ -1,3 +1,6 @@
+const nombre = document.getElementById("name")
+const direccion = document.getElementById("direccion")
+const comuna = document.getElementById("comuna")
 
 const Persona = function(nombre, direccion, comuna){
     this.nombre = nombre
@@ -30,17 +33,14 @@ function filtrarComuna(){
 }
 
 function agregarPersona(){
-    let nombre = prompt("ingresa nombre de persona:").trim()
-    let direccion = prompt("ingresa la direccion de la persona:").trim()
-    let comuna = prompt("ingresa la comuna de la persona:").trim()
-
-    if (nombre == null || nombre == "" || direccion == null || direccion == "" || comuna == null || comuna == "")
+    
+    if (nombre.value == "" || direccion.value == "" || comuna.value == "")
     {
         alert("Datos incorrectos. ")
         return 
     }   
 
-    let persona = new Persona(nombre, direccion, comuna)
+    let persona = new Persona(nombre.value, direccion.value, comuna.value)
 
     if (listaPersonas.some((x)=>x.nombre.trim().toUpperCase() === persona.nombre.trim().toUpperCase()))
     {
@@ -50,6 +50,7 @@ function agregarPersona(){
 
     listaPersonas.push(persona)
     console.table(listaPersonas)
+    return true
 }
 
 function Imprimir(arreglo){
@@ -75,6 +76,7 @@ function Imprimir(arreglo){
 
 }
 
+/*
 let opcion = 0
 while (opcion != 4)
 {
@@ -102,3 +104,32 @@ while (opcion != 4)
             break
     }
 }
+*/
+const btn =  document.getElementById("btnAdd")
+const container = document.getElementById("container")
+
+btn.addEventListener("click", ()=>{
+    if (agregarPersona()) 
+        crearTarjeta(container)
+})
+
+function crearTarjeta(container){
+    const tarjeta =  document.createElement("div")
+    tarjeta.innerHTML= `
+    <h2>${nombre.value}</h2>
+    <p>${direccion.value}</p>
+    <p>${comuna.value}</p>
+    `
+    container.appendChild(tarjeta)
+}
+
+var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'))
+triggerTabList.forEach(function (triggerEl) {
+  var tabTrigger = new bootstrap.Tab(triggerEl)
+
+  triggerEl.addEventListener('click', function (event) {
+    event.preventDefault()
+    tabTrigger.show()
+  })
+})
+
